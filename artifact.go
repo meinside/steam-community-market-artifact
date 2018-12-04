@@ -15,8 +15,9 @@ import (
 const (
 	appID = 583950 // Artifact
 
-	apiURL       = "https://steamcommunity.com/market/search/render/"
-	imageBaseURL = "https://steamcommunity-a.akamaihd.net/economy/image/"
+	apiURL        = "https://steamcommunity.com/market/search/render/"
+	marketBaseURL = "https://steamcommunity.com/market/listings/%d/%s"
+	imageBaseURL  = "https://steamcommunity-a.akamaihd.net/economy/image/"
 
 	searchMaxCount = 100
 )
@@ -92,6 +93,11 @@ type MarketItem struct {
 	AppName          string                `json:"app_name"`
 	AssetDescription MarketItemDescription `json:"asset_description"`
 	SalePriceText    string                `json:"sale_price_text"`
+}
+
+// StoreURL generates a URL which directs to the Steam Communit Market page of this item
+func (i *MarketItem) StoreURL() string {
+	return fmt.Sprintf(marketBaseURL, appID, i.HashName)
 }
 
 // ToJSON prettifies MarketItem to JSON string
